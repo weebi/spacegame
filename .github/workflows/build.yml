@@ -34,6 +34,7 @@ jobs:
             Library-
       - uses: webbertakken/unity-builder@v1.2
         with:
+          buildName: Spacegame
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
