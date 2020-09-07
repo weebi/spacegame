@@ -19,3 +19,6 @@ jobs:
         with:
           name: ${{ steps.getManualLicenseFile.outputs.filePath }}
           path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+      
+      - name: Unity - Activate
+        uses: webbertakken/unity-activate@v1.2
