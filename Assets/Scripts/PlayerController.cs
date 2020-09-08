@@ -22,12 +22,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         cheat = false;
-        QualitySettings.vSyncCount = 1;
+        QualitySettings.vSyncCount = 1; // enable vSync
         //Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
         txtScore = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
         txtLives = GameObject.FindWithTag("LivesText").GetComponent<Text>();
         
+        // set screen boundaries
         bottomLeft = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
         topRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         height = transform.localScale.y;
@@ -46,19 +47,19 @@ public class PlayerController : MonoBehaviour
         moveInputVer = Input.GetAxis("Vertical");
         rb.velocity = new Vector2(moveInputHor * speed, rb.velocity.y); // move on the vertical axis
 
+        // enable "cheat mode" = fast shooting by pressing C, toggle off by pressing it again
         if (Input.GetKeyDown(KeyCode.C)) {
             if(cheat) cheat = false;
             else cheat = true;
         }
 
-        // change to .GetKey() for speeed
         if(cheat == true) {
             if (Input.GetKey(KeyCode.Space)) Shoot(); // brrr
         } else {
             if (Input.GetKeyDown(KeyCode.Space)) Shoot(); // pew
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) { // quit by pressing esc
             Application.Quit();
         }
 
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
         GameObject laser = Instantiate(laserPrefab, rb.position + Vector2.up * 0.25f, Quaternion.identity);
         BulletController projectile = laser.GetComponent<BulletController>();
         projectile.Shoot(new Vector2(0,1), 250);
-        projectile.Break(2);
+        projectile.Break(2); // destroy bullet after two seconds
     }
 
     public void AddScore()
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void RemoveScore() {
+    public void RemoveScore() { // -1 score if over 0
         if(score > 0) {
             this.score -= 1;
             this.txtScore.text = "Score: " + score;
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
             // if on last life, red text
             if(lives == 0) txtLives.color = Color.red;
-            if(obj.tag != "Player") Destroy(obj);
+            if(obj.tag != "Player") Destroy(obj); // destroy gameobject if not player, lazy fix
             RemoveScore();
         } else {
             Destroy(obj); //kill enemy
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other) { // on collision with enemy
+    void OnCollisionEnter2D(Collision2D other) { // -1 on collision with enemy
         if (other.gameObject.tag == "Enemy") RemoveHealth(other.gameObject);
     }
 }
