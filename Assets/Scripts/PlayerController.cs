@@ -9,19 +9,24 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public GameObject laserPrefab;
     private Text txtScore;
+    private Text txtLives;
     public int score;
     private Vector2 bottomLeft;
     private Vector2 topRight;
     private float height;
     private int highscore;
+    public int lives;
+    private bool cheat;
     
     // Start is called before the first frame update
     void Start()
     {
+        cheat = false;
         QualitySettings.vSyncCount = 1;
         //Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
         txtScore = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
+        txtLives = GameObject.FindWithTag("LivesText").GetComponent<Text>();
         
         bottomLeft = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
         topRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
@@ -35,18 +40,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // oikea nuoli = 1, vasen nuoli = 1
         moveInputHor = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(rb.velocity.x, moveInputVer * speed); // do stuff
+        rb.velocity = new Vector2(rb.velocity.x, moveInputVer * speed); // move on the horizontal axis
 
-        // oikea nuoli = 1, vasen nuoli = 1
         moveInputVer = Input.GetAxis("Vertical");
-        rb.velocity = new Vector2(moveInputHor * speed, rb.velocity.y); // do stuff
+        rb.velocity = new Vector2(moveInputHor * speed, rb.velocity.y); // move on the vertical axis
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            if(cheat) cheat = false;
+            else cheat = true;
+        }
 
         // change to .GetKey() for speeed
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            Shoot(); // pew
+        if(cheat == true) {
+            if (Input.GetKey(KeyCode.Space)) Shoot(); // brrr
+        } else {
+            if (Input.GetKeyDown(KeyCode.Space)) Shoot(); // pew
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -79,11 +88,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other) { // on collision with enemy
-        if (other.gameObject.tag == "Enemy") {
-            Destroy(other.gameObject); //kill enemy
+    public void RemoveScore() {
+        if(score > 0) {
+            this.score -= 1;
+            this.txtScore.text = "Score: " + score;
+            PlayerPrefs.SetInt("score", this.score);
+        }
+    }
+
+    public void RemoveHealth(GameObject obj) {
+        if(lives > 0){
+            lives--;
+            txtLives.text = "Lives: " + lives;
+
+            // if on last life, red text
+            if(lives == 0) txtLives.color = Color.red;
+            if(obj.tag != "Player") Destroy(obj);
+            RemoveScore();
+        } else {
+            Destroy(obj); //kill enemy
             Destroy(gameObject); // die
             SceneManager.LoadScene("GameOver");
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) { // on collision with enemy
+        if (other.gameObject.tag == "Enemy") RemoveHealth(other.gameObject);
     }
 }
