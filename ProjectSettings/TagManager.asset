@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - trigger
   - enemybullet
+  - LivesText
   layers:
   - Default
   - TransparentFX

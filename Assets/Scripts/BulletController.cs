@@ -16,16 +16,15 @@ public class BulletController : MonoBehaviour
     public void Shoot(Vector2 direction, float force) {
         rb.AddForce(direction * force);
     }
-    
+
     public void Break(float time) {
         Destroy(gameObject, time);
     }
 
     void OnTriggerEnter2D(Collider2D other) { // for enemy bullet
         if(gameObject.tag == "enemybullet" && other.gameObject.tag == "Player") {
-            Destroy(other.gameObject); //kill player
             Destroy(gameObject); // die
-            SceneManager.LoadScene("GameOver");
+            pc.RemoveHealth(other.gameObject);
         }
     }
 
