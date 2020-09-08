@@ -2,7 +2,10 @@ name: Build project
 
 on:
   pull_request: {}
-  push: { branches: [master] }
+  push: 
+    branches: [master]
+    tags: 
+      -'*'
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -42,3 +45,7 @@ jobs:
         with:
           name: Spacegame
           path: build
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "Spacegame.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
