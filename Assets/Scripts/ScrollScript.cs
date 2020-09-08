@@ -6,6 +6,7 @@ public class ScrollScript : MonoBehaviour
 {
     float scrollSpeed = -1f;
     Vector2 startPos;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +19,4 @@ public class ScrollScript : MonoBehaviour
         float newPos = Mathf.Repeat (Time.time * scrollSpeed, 7.45f);
         transform.position = startPos + Vector2.up * newPos;
     }
-    
 }
