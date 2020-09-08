@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public float elapsedTime = 0.0f;
     private Rigidbody2D rb;
     public GameObject laserPrefab;
+    private GameObject[] enemylist;
     
     // Update is called once per frame
     void Update()
@@ -25,9 +26,10 @@ public class EnemyController : MonoBehaviour
             float y = Random.Range(9.5f, 11f); //random height
             Vector3 spawnPosition = new Vector3 (x, y, 0f);
             GameObject newEnemy = (GameObject) Instantiate(enemyObject, spawnPosition, Quaternion.Euler (0, 0, 0));
-            Destroy(newEnemy, 10); // todo collision with newEnemy and trigger
-
-            rb = newEnemy.GetComponent<Rigidbody2D>();
+            Destroy(newEnemy, 10);
+            
+            enemylist = GameObject.FindGameObjectsWithTag("Enemy");
+            rb = enemylist[Random.Range(0, enemylist.Length)].GetComponent<Rigidbody2D>();
             Shoot();
             
             if(secondsBetweenSpawn > 0) secondsBetweenSpawn = secondsBetweenSpawn - 0.02f;
@@ -36,7 +38,7 @@ public class EnemyController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject laser = Instantiate(laserPrefab, rb.position + Vector2.down * 0.5f, Quaternion.identity);
+        GameObject laser = Instantiate(laserPrefab, rb.position + Vector2.down * 0.2f, Quaternion.identity);
         BulletController projectile = laser.GetComponent<BulletController>();
         projectile.Shoot(new Vector2(0,-1), 150);
         projectile.Break(2);

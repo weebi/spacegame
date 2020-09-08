@@ -12,6 +12,7 @@ public Text txtScore;
         int score = PlayerPrefs.GetInt("score");
         txtScore.text = "Game over!\n <i>Score: " + score +"</i>";
     }
+
     public void StartGame()
     {
         PlayerPrefs.SetInt("score", 0);
