@@ -808,7 +808,6 @@ GameObject:
   - component: {fileID: 1829355724}
   - component: {fileID: 1829355723}
   - component: {fileID: 1829355727}
-  - component: {fileID: 1829355728}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -911,26 +910,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e96071f1d20d6f408dc4c7ca2c40eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtScore: {fileID: 46556011}
---- !u!114 &1829355728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829355722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04fa623f64980f489981938d9640688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyObject: {fileID: 5646003562918168649, guid: 21ddd9ac173c7f448bd8ca8c02aed69f,
-    type: 3}
-  secondsBetweenSpawn: 2
-  elapsedTime: 0
-  laserPrefab: {fileID: 9082272068955244261, guid: ca142de9f6855034d8d622156fac07e4,
-    type: 3}
-  fixedSpawnRate: 1
+  txtScore: {fileID: 337877190}
+  highScore: {fileID: 1509442738}
+  score: 0
+  highscore: 0
 --- !u!1 &2101056014
 GameObject:
   m_ObjectHideFlags: 0
