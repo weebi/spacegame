@@ -24,10 +24,11 @@ public class PlayerController : MonoBehaviour
         cheat = false;
         QualitySettings.vSyncCount = 1; // enable vSync
         //Application.targetFrameRate = 60;
+
         rb = GetComponent<Rigidbody2D>();
         txtScore = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
         txtLives = GameObject.FindWithTag("LivesText").GetComponent<Text>();
-        
+
         // set screen boundaries
         bottomLeft = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
         topRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
@@ -83,10 +84,6 @@ public class PlayerController : MonoBehaviour
         this.txtScore.text = "Score: " + score;
         
         PlayerPrefs.SetInt("score", this.score);
-        highscore = PlayerPrefs.GetInt("highscore");
-        if(score > highscore) {
-            PlayerPrefs.SetInt("highscore", highscore);
-        }
     }
 
     public void RemoveScore() { // -1 score if over 0

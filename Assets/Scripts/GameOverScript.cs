@@ -6,11 +6,23 @@ using System.IO;
 using UnityEngine.UI;
 public class GameOverScript : MonoBehaviour
 {
-public Text txtScore;
+
+    public Text txtScore;
+    public Text highScore;
+    public int score;
+    public int highscore;
 
     public void Start() {
-        int score = PlayerPrefs.GetInt("score");
-        txtScore.text = "Game over!\n <i>Score: " + score +"</i>";
+        score = PlayerPrefs.GetInt("score");
+
+        if(score > highscore) {
+            PlayerPrefs.SetInt("highscore", score);
+        }
+        highscore = PlayerPrefs.GetInt("highscore");
+
+        txtScore.text = "<i>Score: " + score +"</i>";
+        highScore.text = "<i>Highscore: " + highscore +"</i>";
+        
     }
 
     public void StartGame()

@@ -43,6 +43,6 @@ public class EnemyController : MonoBehaviour
         GameObject laser = Instantiate(laserPrefab, rb.position + Vector2.down * 0.2f, Quaternion.identity);
         BulletController projectile = laser.GetComponent<BulletController>();
         projectile.Shoot(new Vector2(0,-1), 150);
-        Destroy(projectile,2);
+        projectile.Break(2);
     }
 }
