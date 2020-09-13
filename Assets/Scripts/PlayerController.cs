@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) Shoot(); // pew
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) { // quit by pressing esc
+        if (Input.GetKeyDown(KeyCode.Escape)) { // pause by pressing esc
             if(Time.timeScale == 0) {
                 Time.timeScale = 1;
             } else {
@@ -112,6 +112,10 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject); // die
             SceneManager.LoadScene("GameOver");
         }
+    }
+
+    public void QuitGame() {
+        Application.Quit();
     }
 
     void OnCollisionEnter2D(Collision2D other) { // -1 on collision with enemy
